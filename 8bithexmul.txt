@@ -1,0 +1,30 @@
+;<Program title>
+
+jmp start
+
+;data
+
+;code
+start: nop
+
+MVI A, 00H
+MVI D, 00H
+
+LXI H, 0506H
+
+LOOP: ADD H
+
+JNC NEXT
+INR D
+
+NEXT: DCR L
+
+JNZ LOOP
+
+STA 0000H
+
+hlt          
+
+......
+
+plus flowchart

@@ -1,0 +1,21 @@
+jmp start
+
+;data
+
+;code
+start: nop
+
+MVI C, 03H
+MVI B, 04H
+MVI D, 05H
+
+MOV A, C
+CMP B
+JNC NEXT
+MOV A, B
+
+NEXT: CMP D
+JNC END
+MOV A, D
+
+END: HLT

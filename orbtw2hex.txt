@@ -1,0 +1,16 @@
+;<Program title>
+
+jmp start
+
+;data
+
+;code
+start: nop
+
+MVI B, 04H
+MVI C, 13H
+
+MOV A, B
+ORA C
+
+hlt

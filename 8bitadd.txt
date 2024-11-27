@@ -1,0 +1,42 @@
+;<Program title>
+
+jmp start
+
+;data
+
+;code
+start: nop
+
+MVI B, 04D
+MVI C, 12D
+
+MOV A, B
+ADD C
+
+hlt
+
+
+.......
+
+;<Program title>
+
+jmp start
+
+;data
+
+;code
+start: nop
+
+MVI A, 21D
+STA 2200H
+
+MVI A, 07D
+STA 2201H
+
+LDA 2200H
+MOV D, A
+
+LDA 2201H
+ADD D
+
+hlt

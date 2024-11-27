@@ -1,0 +1,24 @@
+;<Program title>
+
+jmp start
+
+;data
+
+;code
+start: nop
+
+LDA 2201H
+MOV B, A
+LDA 2203H
+ADD B
+STA 2205H
+JNC NIL
+INR A
+
+NIL: LDA 2200H
+MOV B, A
+LDA 2202H
+ADC B
+STA 2204H
+                        
+hlt
