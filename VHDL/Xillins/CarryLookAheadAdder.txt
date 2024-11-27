@@ -1,0 +1,54 @@
+1. File → new project → name → next → Preferred language → VHDL → next → Finish
+2. right click(Source file) → new source → VHDL module → file name → next → 
+    
+    A (in) → check bus → MSB(3) → LSB(0) →
+    
+    B (in) → check bus → MSB(3) → LSB(0) →
+    
+    C_in (in) →
+    
+    Sum (out) → check bus → MSB(3) → LSB(0) →
+    
+    C_out (out)
+    
+    → next → finish
+
+
+.............
+
+ARCHITECTURE behavior OF CarryLookAheadAdder IS
+    SIGNAL P, G       : std_logic_vector(3 DOWNTO 0);
+    SIGNAL C          : std_logic_vector(4 DOWNTO 0);
+BEGIN
+    C(0) <= C_in;
+    P <= A XOR B;
+    G <= A AND B;
+    C(1) <= G(0) OR (P(0) AND C(0));
+    C(2) <= G(1) OR (P(1) AND G(0)) OR (P(1) AND P(0) AND C(0));
+    C(3) <= G(2) OR (P(2) AND G(1)) OR (P(2) AND P(1) AND G(0)) OR (P(2) AND P(1) AND P(0) AND C(0));
+    C(4) <= G(3) OR (P(3) AND G(2)) OR (P(3) AND P(2) AND G(1)) OR (P(3) AND P(2) AND G(0)) OR (P(3) AND P(2) AND P(1) AND P(0) AND C(0));
+    Sum <= P XOR C(3 DOWNTO 0);
+    C_out <= C(4);
+END behavior;
+
+.........
+
+begin
+        -- Test Case 1: A = 0000, B = 0000, C_in = 0 (Expect Sum = 0000, C_out = 0)
+        A <= "0000"; B <= "0000"; C_in <= '0'; wait for 10 ns;
+
+        -- Test Case 2: A = 0001, B = 0001, C_in = 0 (Expect Sum = 0010, C_out = 0)
+        A <= "0001"; B <= "0001"; C_in <= '0'; wait for 10 ns;
+
+        -- Test Case 3: A = 0110, B = 0011, C_in = 0 (Expect Sum = 1001, C_out = 0)
+        A <= "0110"; B <= "0011"; C_in <= '0'; wait for 10 ns;
+
+        -- Test Case 4: A = 1111, B = 0001, C_in = 0 (Expect Sum = 0000, C_out = 1)
+        A <= "1111"; B <= "0001"; C_in <= '0'; wait for 10 ns;
+
+        -- Test Case 5: A = 1010, B = 0101, C_in = 1 (Expect Sum = 0000, C_out = 1)
+        A <= "1010"; B <= "0101"; C_in <= '1'; wait for 10 ns;
+
+        -- Finish simulation
+        wait;
+end process;

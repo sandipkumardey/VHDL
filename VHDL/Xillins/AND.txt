@@ -1,0 +1,40 @@
+c <= a and b;
+
+
+comment this 3 blocks of code (Line number varies)
+
+--constant <clock>_period : time := 10 ns;    //line 60
+
+[select the lines and press ALT+c]
+
+--<clock>_process :process     //line 72-78 
+--   begin
+--		<clock> <= '0';
+--		wait for <clock>_period/2;
+--		<clock> <= '1';
+--		wait for <clock>_period/2;
+--   end process;
+---------------
+
+
+begin	
+  	a <= '0';
+		b <= '0';
+      -- hold reset state for 100 ns.
+      wait for 100 ns;
+		
+		a <= '0';
+		b <= '1';
+      -- hold reset state for 100 ns.
+      wait for 100 ns;
+		
+		a <= '1';
+		b <= '0';
+      -- hold reset state for 100 ns.
+      wait for 100 ns;
+		
+		a <= '1';
+		b <= '1';
+      -- hold reset state for 100 ns.
+      wait for 100 ns;
+end process;      

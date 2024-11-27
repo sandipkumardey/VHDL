@@ -1,0 +1,56 @@
+1. File → new project → name → next → Preferred language → VHDL → next → Finish
+2. right click(Source file) → new source → VHDL module → file name → next → 
+    
+    din(in) → check bus → MSB(1) → LSB(0) →
+    
+    dout(out) → check bus → MSB(3) → LSB(0) → next → finish
+
+
+...........
+
+
+begin
+	dout <= ("1000") when (din = "00") else
+			    ("0100") when (din = "01") else
+			    ("0010") when (din = "10") else
+			    ("0001");
+end Behavioral;
+
+
+.......
+
+begin		
+        -- Test each input value one at a time
+        din <= "00"; wait for 10 ns;
+        din <= "01"; wait for 10 ns;
+        din <= "10"; wait for 10 ns;
+        din <= "11"; wait for 10 ns;
+
+        -- Finish simulation
+        wait;
+end process;
+
+......
+
+BEGIN
+
+   -- Instantiate the Unit Under Test (UUT)
+   uut: Decoder PORT MAP (
+          din => din,
+          dout => dout
+        );
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+        -- Apply all possible input combinations
+        for i in 0 to 7 loop
+            din <= std_logic_vector(to_unsigned(i, 3));
+            wait for 10 ns;  -- Wait for output to settle
+        end loop;
+
+        -- Finish simulation
+        wait;
+   end process;
+
+END behavior;

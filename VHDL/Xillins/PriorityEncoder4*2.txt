@@ -1,0 +1,54 @@
+input(in) → check bus → MSB(3) → LSB(0) →
+
+output(out) → check bus → MSB(1) → LSB(0) → 
+
+valid(out) →
+
+
+..........
+
+begin
+    process(input)
+  begin
+        if input = "0000" then
+            output <= "00"; -- default output when no inputs are active
+            valid <= '0';
+			 else
+            valid <= '1';
+            case input is
+                when "1000" => output <= "11"; -- highest priority (bit 3)
+                when "0100" => output <= "10"; -- bit 2
+                when "0010" => output <= "01"; -- bit 1
+                when "0001" => output <= "00"; -- bit 0
+                when others => output <= "00"; -- handle unexpected cases
+            end case;
+        end if;
+    end process;
+
+end Behavioral;
+
+.........
+
+begin	
+		input <= "0000";
+      wait for 100 ns;	
+      
+		input <= "0001";
+		wait for 100 ns;
+		
+		input <= "0010";
+			 wait for 100 ns;	
+			 
+		input <= "0100";
+		wait for 100 ns;
+		
+		input <= "1000";
+      wait for 100 ns;	
+      
+		input <= "1100";
+		wait for 100 ns;
+		
+		  wait;
+   end process;
+
+END;

@@ -1,0 +1,77 @@
+1. File → new project → name → next → Preferred language → VHDL → next → Finish
+2. right click(Source file) → new source → VHDL module → file name → next → 
+    
+    S(in) → check bus → MSB(2) → LSB(0) →
+    
+    I(in) → check bus → MSB(7) → LSB(0) →
+    
+    Y(out) → next → finish
+
+
+........
+
+begin
+    process(I, S)
+    begin
+        case S is
+            when "000" => Y <= I(0);
+            when "001" => Y <= I(1);
+            when "010" => Y <= I(2);
+            when "011" => Y <= I(3);
+            when "100" => Y <= I(4);
+            when "101" => Y <= I(5);
+            when "110" => Y <= I(6);
+            when "111" => Y <= I(7);
+            when others => Y <= '0';
+        end case;
+    end process;
+end Behavioral;
+
+........
+
+ begin
+        -- Test Case 1: I0 is selected
+        I <= "00000001";  -- Set input
+        S <= "000";       -- Select I0
+        wait for 10 ns;
+
+        -- Test Case 2: I1 is selected
+        I <= "00000010";  -- Set input
+        S <= "001";       -- Select I1
+        wait for 10 ns;
+
+        -- Test Case 3: I2 is selected
+        I <= "00000100";  -- Set input
+        S <= "010";       -- Select I2
+        wait for 10 ns;
+
+        -- Test Case 4: I3 is selected
+        I <= "00001000";  -- Set input
+        S <= "011";       -- Select I3
+        wait for 10 ns;
+
+        -- Test Case 5: I4 is selected
+        I <= "00010000";  -- Set input
+        S <= "100";       -- Select I4
+        wait for 10 ns;
+
+        -- Test Case 6: I5 is selected
+        I <= "00100000";  -- Set input
+        S <= "101";       -- Select I5
+        wait for 10 ns;
+
+        -- Test Case 7: I6 is selected
+        I <= "01000000";  -- Set input
+        S <= "110";       -- Select I6
+        wait for 10 ns;
+
+        -- Test Case 8: I7 is selected
+        I <= "10000000";  -- Set input
+        S <= "111";       -- Select I7
+        wait for 10 ns;
+
+        -- End of simulation
+        wait;
+    end process;
+
+end Behavioral;

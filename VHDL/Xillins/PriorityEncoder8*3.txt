@@ -1,0 +1,62 @@
+input(in) → check bus → MSB(7) → LSB(0) →
+
+output(out) → check bus → MSB(2) → LSB(0) → 
+
+valid(out) →
+
+
+..........
+
+begin
+    process(input)
+begin
+ if input = "00000000" then
+            output <= "000"; -- Default output when no inputs are active
+            valid <= '0';
+ else
+            valid <= '1';
+            case input is
+				 when "10000000" => output <= "111"; -- Highest priority (bit 7)
+                when "01000000" => output <= "110"; -- Bit 6
+                when "00100000" => output <= "101"; -- Bit 5
+					  when "00010000" => output <= "100"; -- Bit 4
+                when "00001000" => output <= "011"; -- Bit 3
+                when "00000100" => output <= "010"; -- Bit 2
+					  when "00000010" => output <= "001"; -- Bit 1
+                when "00000001" => output <= "000"; -- Bit 0
+                when others => output <= "000"; -- Handle unexpected cases
+					  end case;
+        end if;
+    end process;
+end Behavioral;
+
+
+........
+
+ begin
+        -- Test case 1: No input active
+        input <= "00000000";
+        wait for 10 ns;
+       
+        -- Test case 2: Lowest priority input active
+        input <= "00000001";
+        wait for 10 ns;
+       
+
+        -- Test case 3: Higher priority input active
+        input <= "00010000";
+        wait for 10 ns;
+        
+        -- Test case 4: Highest priority input active
+        input <= "10000000";
+        wait for 10 ns;
+       
+
+        -- Test case 5: Multiple inputs active
+      input <= "11000000"; -- Only the highest priority (bit 7) should be considered
+        wait for 10 ns;
+        
+        -- End of tests
+        wait;
+    end process;
+end Behavioral;
